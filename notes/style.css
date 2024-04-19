@@ -1,0 +1,14 @@
+#banner {
+    align-items: center;
+    background-color: black;
+    display: flex;
+    height: 50px;
+}
+
+#webchat {
+    height: calc(100% - 50px) !important;
+    overflow: hidden;
+    position: fixed;
+    top: 50px;
+    text-align: left;
+}

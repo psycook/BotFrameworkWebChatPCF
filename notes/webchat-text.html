@@ -1,0 +1,93 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Web Chat Bot</title>
+    <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
+    <style>
+        html,
+        body {
+            margin: 8px;
+            padding: 0;
+        }
+
+        h2 {
+            font-family: 'Comic Sans MS', 'Arial', sans-serif;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .webchat-container {
+            height: 500px;
+            width: 1000px;
+            border: 1px solid #f08040;
+        }
+    </style>
+</head>
+<body>
+    <h2>Web Chat bot client using Direct Line</h2>
+    <div id="webchat" class="webchat-container" role="main"></div>
+    <script>
+        console.log('Web Chat client script loaded');
+
+        const styleSet = window.WebChat.createStyleSet(
+        {
+            accent: "#000000",
+            botAvatarBackgroundColor: "#F8F8F8",
+            hideUploadButton: true,
+            backgroundColor: "#F8F8F8",
+            bubbleBorderColor: "#f08040",
+            sendBoxButtonColor: "#000000",
+            timestampColor: "#f08040",
+            rootHeight: '100%',
+            rootWidth: '100%'
+        });
+
+        const avatarOptions = {
+            botAvatarImage: "https://github.com/psycook/images/blob/main/Contoso%20Bank%20Chatbot.png?raw=true",
+            botAvatarInitials: "HB",
+            userAvatarImage: "https://github.com/psycook/images/blob/main/Contoso%20Bank%20Customer%20New.png?raw=true",
+            userAvatarInitials: "MS",
+        };
+
+        styleSet.textContent = {
+            ...styleSet.textContent,
+            fontFamily: "'Comic Sans MS', 'Arial', sans-serif",
+            fontWeight: 'bold'
+        };
+
+        async function initializeChat() {
+            const res = await fetch('https://10231c189c2fe920ae584577975fce.1a.environment.api.powerplatform.com/powervirtualagents/botsbyschema/cr49b_insuranceVisionCopilot/directline/token?api-version=2022-03-01-preview', { method: 'GET' });
+            const { token } = await res.json();
+
+            const directLine = window.WebChat.createDirectLine({ token });
+
+            // show the chat window
+            window.WebChat.renderWebChat(
+                {
+                    directLine: directLine,
+                    userID: 'Simon',
+                    locale: 'en-US',
+                    username: 'simonco',
+                    locale: 'en-US',
+                    styleSet,
+                    styleOptions: avatarOptions
+                },
+                document.getElementById('webchat')
+            );
+
+            // Start a conversation by sending an event activity
+            directLine.postActivity({
+                from: { id: 'Simon', name: 'simonco' }, // Use the same user ID and name that you used in renderWebChat
+                name: 'startConversation',
+                type: 'event',
+                value: 'welcome' // You can put any value that your bot will recognize
+            }).subscribe(
+                id => console.log(`Posted activity, assigned ID ${id}`),
+                error => console.log(`Error posting activity ${error}`)
+            );
+        }
+        initializeChat();
+    </script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <control namespace="smc" constructor="BotFrameworkWebChatComponent" version="0.0.1" display-name-key="BotFrameworkWebChatComponent" description-key="BotFrameworkWebChatComponent description" control-type="standard" >
+    <external-service-usage enabled="false">
+    </external-service-usage>
+    <property name="tokenEndpoint" display-name-key="Bot Token Endpoint" description-key="The bot token endpoint from the Copilot Studio mobile deployment channel" of-type="SingleLine.Text" usage="input" required="true" default-value=""/>
+    <property name="fontSize" display-name-key="Font Size" description-key="The size of the font" of-type="SingleLine.Text" usage="input" required="true" default-value="16px"/>
+    <property name="styleSet" display-name-key="Style Set" description-key="The style set for the bot" of-type="SingleLine.TextArea" usage="input" required="true" default-value="{}"/>
+    <property name="avatarOptions" display-name-key="Avatar Options" description-key="The options for the avatars" of-type="SingleLine.TextArea" usage="input" required="true" default-value="{}"/>
+    <resources>
+      <code path="index.ts" order="1"/>
+    </resources>
+  </control>
+</manifest>
